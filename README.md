@@ -105,11 +105,18 @@ You can test this API using any API client such as:
 ```arduino
 http://127.0.0.1:8000/api/accounts
 ```
+
 4. Test authentication endpoints:
-   **Register → POST /register/**
-   **Login → POST /login/**
+   - **Register → POST /register/**
+   - **Login → POST /login/**
+     
+5. After login, authentication tokens are stored in HTTP-only cookies, so:
+   - **No need to manually add Authorization headers**
+   - **Postman will automatically send cookies on subsequent requests**
 
-
+6. Test protected endpoints such as:
+   **GET /todo/my_tasks/**
+   **POST /todo/add_task/**
 
 ## 🔹 Tech Stack
 ```md
