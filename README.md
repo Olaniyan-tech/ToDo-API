@@ -65,7 +65,7 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 |--------|--------|------------|
 | `/api/todo/add_task/` | POST | Create a task |
 | `/api/todo/tasks/` | GET | List user tasks |
-| `/api/todo/task_details/<slug>/` | Get the details of a particular task |
+| `/api/todo/task_details/<slug>/` | GET | Get the details of a particular task |
 | `/api/todo/tasks/<id>/` | PATCH | Update a task |
 | `/api/todo/tasks/<id>/` | DELETE | Delete a task |
 | `/api/todo/tasks/search/` | GET | Search tasks |
