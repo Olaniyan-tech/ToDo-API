@@ -53,7 +53,7 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 ```md
 ## API Endpoints
 
-```md
+
 ### Authentication
 
 | Endpoint | Method | Description |
