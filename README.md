@@ -85,6 +85,25 @@ Content-Type: application/json
 }
 
 
+---
+
+## 🔹 Tech Stack
+
+```md
+## Tech Stack
+
+- Python
+- Django
+- Django REST Framework
+- Simple JWT
+
+
+## Notes
+
+- This is a backend-only project.
+- All endpoints require authentication except register and login.
+- Frontend applications (React, Vue, Mobile apps) can consume this API.
+
 
 
 
