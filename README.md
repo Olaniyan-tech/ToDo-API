@@ -53,6 +53,16 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 ```md
 ## API Endpoints
 
+```md
+### Authentication
+
+| Endpoint | Method | Description |
+|--------|--------|------------|
+| `/api/register/` | POST | Register a new user |
+| `/api/login/` | POST | Login user |
+| `/api/token/refresh/` | POST | Refresh access token |
+| `/api/logout/` | POST | Logout user |
+
 
 
 
