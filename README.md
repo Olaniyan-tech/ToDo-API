@@ -54,20 +54,21 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 
 | Endpoint | Method | Description |
 |--------|--------|------------|
-| `/api/register/` | POST | Register a new user |
-| `/api/login/` | POST | Login user |
-| `/api/token/refresh/` | POST | Refresh access token |
-| `/api/logout/` | POST | Logout user |
+| `/api/accounts/register/` | POST | Register a new user |
+| `/api/accounts/login/` | POST | Login user |
+| `/api/accounts/token/refresh/` | POST | Refresh access token |
+| `/api/accounts/logout/` | POST | Logout user |
 
 ### Tasks
 
 | Endpoint | Method | Description |
 |--------|--------|------------|
 | `/api/todo/add_task/` | POST | Create a task |
-| `/api/tasks/` | GET | List user tasks |
-| `/api/tasks/<id>/` | PATCH | Update a task |
-| `/api/tasks/<id>/` | DELETE | Delete a task |
-| `/api/tasks/search/` | GET | Search tasks |
+| `/api/todo/tasks/` | GET | List user tasks |
+| `/api/todo/task_details/<slug>/` | Get the details of a particular task |
+| `/api/todo/tasks/<id>/` | PATCH | Update a task |
+| `/api/todo/tasks/<id>/` | DELETE | Delete a task |
+| `/api/todo/tasks/search/` | GET | Search tasks |
 
 ---
 
@@ -85,25 +86,6 @@ Content-Type: application/json
 
 
 
-
----
-
-## 🔹 Tech Stack
-
-```md
-## Tech Stack
-
-- Python
-- Django
-- Django REST Framework
-- Simple JWT
-
-
-## Notes
-
-- This is a backend-only project.
-- All endpoints require authentication except register and login.
-- Frontend applications (React, Vue, Mobile apps) can consume this API.
 
 
 
