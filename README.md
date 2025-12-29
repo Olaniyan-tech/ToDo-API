@@ -85,6 +85,31 @@ Content-Type: application/json
 }
 ```
 
+---
+
+## Testing the API
+
+You can test this API using any API client such as:
+
+- **Postman** (recommended)
+- **Insomnia**
+- **Thunder Client (VS Code extension)**
+
+### Using Postman
+
+1. Start the Django development server:
+   ```bash
+   python manage.py runserver
+2. Open Postman and create a new request.
+3. Use the Base URL
+```arduino
+http://127.0.0.1:8000/api/accounts
+```
+4. Test authentication endpoints:
+   Register → POST /register/
+   Login → POST /login/
+
+
 
 ## 🔹 Tech Stack
 ```md
