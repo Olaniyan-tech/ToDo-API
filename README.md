@@ -40,9 +40,19 @@ Each user can register, log in, and manage their own tasks securely using JWT au
    ```bash
    python manage.py migrate
 
-9. Start the server
+6. Start the server
    ```bash
    python manage.py runserver
+
+
+
+---
+
+## 🔹 API Endpoints
+
+```md
+## API Endpoints
+
 
 
 
