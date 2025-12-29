@@ -83,9 +83,9 @@ Content-Type: application/json
 {
   "title": "Study Django REST Framework"
 }
+```
 
 
----
 
 ## 🔹 Tech Stack
 
