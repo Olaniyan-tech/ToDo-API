@@ -1,12 +1,16 @@
 from django.urls import path
-from accounts.views import (
-    login_view,
-    logout_view,
-    register_view
-)    
+from .views import(
+    HomePageRedirectView,
+    RegisterView,
+    CookieTokenObtainPairView,
+    CookieTokenRefreshView,
+    LogoutView
+)
 
+app_name = 'accounts'
 urlpatterns = [
-    path('register/', register_view, name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout')
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CookieTokenObtainPairView.as_view(), name="login"),
+    path('token/refresh/', CookieTokenRefreshView.as_view(), name="token_refresh"),
+    path('logout/', LogoutView.as_view(), name='logout')
 ]

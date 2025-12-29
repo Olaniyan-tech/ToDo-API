@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from .utils import slugify_instance_title
+from django.utils import timezone
 
 # Create your models here.
 
@@ -24,35 +25,18 @@ class TaskManager(models.Manager):
         return self.get_queryset().search(query=query)
         
 class Task(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    title = models.CharField(max_length=100, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True, null=True)
     completed = models.BooleanField(default=False)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    updated = models.DateTimeField(auto_now=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     objects = TaskManager()
 
     def __str__(self):
         return self.title
     
-     
-
-    def get_absolute_url(self):
-        return reverse('todo:details', kwargs={'slug' : self.slug})
-    
-    def get_edit_url(self):
-        return reverse('todo:update', kwargs={'id' : self.id})
-    
-    def get_delete_url(self):
-        return reverse('todo:delete', kwargs={'id' : self.id})
-    
-    def all_task_url(self):
-        return reverse('todo:all-tasks')
-    
-    # def save(self, *args, **kwargs):
-    #     slugify_instance_title(self, save=False)
-    #     super().save(*args, **kwargs)
 
 #signals    
 def todo_pre_save(sender, instance, *args, **kwargs):
@@ -62,11 +46,7 @@ def todo_pre_save(sender, instance, *args, **kwargs):
 pre_save.connect(todo_pre_save, sender=Task)
 
 
-# def todo_post_save(sender, instance, created, *args, **kwargs):
-#     if created and not instance.slug:
-#         slugify_instance_title(instance, save=True)
 
-# post_save.connect(todo_post_save, sender=Task)
 
 
 

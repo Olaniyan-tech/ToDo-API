@@ -1,103 +1,62 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponse
-from django.urls import reverse
-from todo.models import Task
-from .forms import TaskForm
-from django.contrib import messages
+from rest_framework.views import APIView
+from rest_framework .response import Response
+from rest_framework import status
+from .models import Task
+from .serializers import TaskSerializer, TaskDetailsSerializer
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
-# Create your views here.
 
-@login_required
-def tasks(request):
-    tasks = Task.objects.filter(user=request.user)
-    context = {'tasks' : tasks}
-    return render(request, "todo/home.html", context)
+User = get_user_model()
 
-@login_required
-def task_details(request, slug=None):
-    task = get_object_or_404(Task, slug=slug, user=request.user)
+class AllTaskView(APIView):
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.filter(user=request.user).order_by('-date_created')
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
 
-    if request.method == "POST":
-        task.completed = 'completed' in request.POST            
-        task.save()
-        return redirect('/')
-    context = {'task' : task}
-    return render(request, "todo/task_details.html", context)
+class TaskDetailsView(APIView):
+    def get(self, request, slug=None, *args, **kwargs):
+        task = get_object_or_404(Task, slug=slug, user=request.user)    
+        serializer = TaskDetailsSerializer(task)
+        return Response(serializer.data)
 
-@login_required
-def search_task(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    query = request.GET.get('q')
-    show_all = request.GET.get("full") == "1"
-    
-    print("Query: ", query)
-    qs = Task.objects.search(query=query) if query else Task.objects.none()
-    print("QS:", qs)
+class SearchTaskView(APIView):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q', '')
+        show_all = request.GET.get("full") == "1"
 
-    search_task_list = qs if show_all else qs[:5]
+        qs = Task.objects.filter(user=request.user).search(query=query) if query else Task.objects.none()
+        search_task_list = qs if show_all else qs[:5]
+        serializer = TaskSerializer(search_task_list, many=True)
 
-    total_count = qs.count()
+        return Response({
+            "results": serializer.data,
+            "query": query,
+            "total_count": qs.count(),
+            "show_all": show_all
+        })
 
-    print("Search_task_list: ", search_task_list)
-    print("Total_count: ", total_count)
-    
-    context = {
-        'search_task' : search_task_list,
-        'query' : query,
-        'total_count' :total_count,
-        'show_all' : show_all
-    }    
+class AddTaskView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = TaskSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return render(request, "todo/search.html", context)
-        
+class UpdateTaskView(APIView):
+    def patch(self, request, id, *args, **kwargs):
+        task = get_object_or_404(Task, id=id, user=request.user)
+        serializer = TaskDetailsSerializer(task, data=request.data, partial=True)
 
-@login_required
-def add_task(request):
-    if 'back' in request.POST:
-        return redirect('tasks')
-    form = TaskForm(request.POST or None)
-    context = {'form' : form}
-    if form.is_valid():
-        task_obj = form.save(commit=False)
-        task_obj.user = request.user
-        task_obj.save()
-        
-        messages.success(request, f"Task: '{task_obj}' created successfully.")
-        return redirect(task_obj.get_absolute_url())
-    
-    return render(request, "todo/add.html", context)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@login_required
-def update_task(request, id=None):
-    obj = get_object_or_404(Task, id=id)
-    form = TaskForm(request.POST or None, instance=obj)
-    context = {'form' : form}
-    if form.is_valid():
-        if form.has_changed():
-            form.save()
-            messages.success(request, 'Updated Successfully.')
-        else:
-            messages.info(request, 'No changes detected.')
-                     
-        return redirect(obj.get_absolute_url())
-    
-    return render(request, "todo/update.html", context)
-
-@login_required
-def delete_task(request, id=None):
-    try: 
-        task = Task.objects.get(id=id)
-    except:
-        task = None
-    if task is None:
-        return HttpResponse("Task not found!!!")
-    
-    if request.method == "POST":
+class DeleteTaskView(APIView):
+    def delete(self, request, id, *args, **kwargs):
+        task = get_object_or_404(Task, id=id, user=request.user)
         task.delete()
-        messages.success(request, f"Task '{task}' deleted successfully!")
-        redirect_url = reverse("todo:all-tasks")
-        return redirect(redirect_url)
-    context = {'task' : task}
-    return render(request, "todo/delete.html", context)
+        return Response({"message": f"Task '{task.title}' deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
