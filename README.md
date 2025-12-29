@@ -25,18 +25,23 @@ Each user can register, log in, and manage their own tasks securely using JWT au
    cd ToDo-API
 
 2. Create a virtual environment
+   ```bash
    python -m venv env
 
 3. Activate the virtual environment
+   ```bash
    env\Scripts\activate
 
-4. Install dependencies
+5. Install dependencies
+   ```bash
    pip install -r requirements.txt
 
-5. Run migrations
+7. Run migrations
+   ```bash
    python manage.py migrate
 
-6. Start the server
+9. Start the server
+   ```bash
    python manage.py runserver
 
 
