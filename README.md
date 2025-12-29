@@ -17,7 +17,7 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 - User-specific task ownership
 - Task search functionality
 
-##  🔹Installation
+##  🔹 Installation
 
 1. Clone the repository
    ```bash
@@ -50,10 +50,6 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 
 ## 🔹 API Endpoints
 
-```md
-## API Endpoints
-
-
 ### Authentication
 
 | Endpoint | Method | Description |
@@ -73,6 +69,7 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 | `/api/tasks/<id>/` | DELETE | Delete a task |
 | `/api/tasks/search/` | GET | Search tasks |
 
+---
 
 ## Example Requests
 
@@ -85,6 +82,7 @@ Content-Type: application/json
 {
   "title": "Study Django REST Framework"
 }
+
 
 
 
