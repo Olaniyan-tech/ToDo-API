@@ -107,16 +107,25 @@ http://127.0.0.1:8000/api/accounts
 ```
 
 4. Test authentication endpoints:
+   
    - **Register → POST /register/**
    - **Login → POST /login/**
      
-5. After login, authentication tokens are stored in HTTP-only cookies, so:
+6. After login, authentication tokens are stored in HTTP-only cookies, so:
    - **No need to manually add Authorization headers**
    - **Postman will automatically send cookies on subsequent requests**
 
-6. Test protected endpoints such as:
-   **GET /todo/my_tasks/**
-   **POST /todo/add_task/**
+7. Test protected endpoints such as:
+   
+   - **GET /todo/my_tasks/**
+   - **POST /todo/add_task/**
+
+```md
+### Cookie-based Authentication
+
+This API uses JWT authentication stored in **HTTP-only cookies** for improved security.  
+Access tokens are automatically sent with each request once the user is logged in.
+```
 
 ## 🔹 Tech Stack
 ```md
@@ -132,6 +141,7 @@ http://127.0.0.1:8000/api/accounts
 - This is a backend-only project.
 - All endpoints require authentication except register and login.
 - Frontend applications (React, Vue, Mobile apps) can consume this API.
+```
 
 
 
