@@ -90,7 +90,6 @@ Content-Type: application/json
 ## 🔹 Tech Stack
 
 ```md
-## Tech Stack
 
 - Python
 - Django
