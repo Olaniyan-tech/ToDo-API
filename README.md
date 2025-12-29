@@ -106,8 +106,8 @@ You can test this API using any API client such as:
 http://127.0.0.1:8000/api/accounts
 ```
 4. Test authentication endpoints:
-   Register → POST /register/
-   Login → POST /login/
+   **Register → POST /register/**
+   **Login → POST /login/**
 
 
 
