@@ -21,5 +21,26 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 
 1. Clone the repository
    ```bash
-   [git clone https://github.com/olaniyan-tech/your-repo.git](https://github.com/Olaniyan-tech/ToDo-API.git)
-   cd your-repo
+   git clone https://github.com/Olaniyan-tech/ToDo-API.git]
+   cd ToDo-API
+
+2. Create a virtual environment
+   python -m venv env
+
+3. Activate the virtual environment
+   env\Scripts\activate
+
+4. Install dependencies
+   pip install -r requirements.txt
+
+5. Run migrations
+   python manage.py migrate
+
+6. Start the server
+   python manage.py runserver
+
+
+
+
+
+
