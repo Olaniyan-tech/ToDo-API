@@ -21,5 +21,5 @@ Each user can register, log in, and manage their own tasks securely using JWT au
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/olaniyan-tech/your-repo.git
+   [git clone https://github.com/olaniyan-tech/your-repo.git](https://github.com/Olaniyan-tech/ToDo-API.git)
    cd your-repo
